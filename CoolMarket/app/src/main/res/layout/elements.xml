@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/TV"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="VERY COOL MARKET"
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:textSize="25sp"
+        android:layout_height="50dp">
+    </TextView>
+
+    <!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp">-->
+
+<!--    </Button>-->
+<!--    <EditText-->
+<!--        android:id="@+id/ET"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:text ="введите олега">-->
+<!--    </EditText>-->
+
+    <CheckBox
+        android:id="@+id/CB1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text = "Хлеб">
+    </CheckBox>
+    <CheckBox
+        android:id="@+id/CB2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text = "Молоко">
+    </CheckBox>
+    <CheckBox
+        android:id="@+id/CB3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text = "Огурцы">
+    </CheckBox>
+    <CheckBox
+        android:id="@+id/CB4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text = "Помидоры">
+    </CheckBox>
+    <CheckBox
+        android:id="@+id/CB5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text = "Яблоки">
+    </CheckBox>
+    <TextView
+        android:id="@+id/TV1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="25sp"></TextView>
+    <RadioGroup
+        android:id="@+id/RG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/RB1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text = "Самовывоз">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/RB2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text = "Курьер">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/RB3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text = "Забрать на кассе">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/RB4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text = "Очистить выбор">
+        </RadioButton>
+    </RadioGroup>
+    <Button
+        android:id="@+id/BT"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="GO"
+        android:textSize="25sp">
+    </Button>
+    <EditText
+        android:id="@+id/ET"
+        android:textAlignment="center"
+        android:hint="Оставьте свой отзыв о работе нашего приложения"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </EditText>
+
+</LinearLayout>
