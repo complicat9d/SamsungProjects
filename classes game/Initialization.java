@@ -46,7 +46,7 @@ public class Initialization {
             } else if (classWarrior.equals("Wizard")) {
                 firstPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else if (classWarrior.equals("Terminator")) {
-                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
 
@@ -63,10 +63,10 @@ public class Initialization {
             } else if (classWarrior.equals("Wizard")) {
                 secondPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else if (classWarrior.equals("Terminator")) {
-                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
-        in.close();
+
     }
 
     public static void OnePlayerWarriorsInitialization() {
@@ -79,30 +79,30 @@ public class Initialization {
         for (int i = 0; i < 3; ++i) {
             String classWarrior;
             classWarrior = in.next();
+            
             while (!classWarrior.equals("Knight") && !classWarrior.equals("Wizard") && !classWarrior.equals("Terminator")) {
                 System.out.println("Wrong warrior's name, try again.");
                 classWarrior = in.next();
             }
             if (classWarrior.equals("Knight")) {
-                firstPlayerWarriors[i] = new Knight(100.0, 100.0, 100.0, 100.0);
+                firstPlayerWarriors[i] = new Knight(Knight.MAX_ARMOUR, Knight.MAX_HEALTH, Knight.MAX_ATTACK, 0);
             } else if (classWarrior.equals("Wizard")) {
                 firstPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else if (classWarrior.equals("Terminator")) {
-                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
         Random random = new Random();
         for (int i = 0; i < 3; ++i) {
             if (random.nextInt(3) == 0) {
-                secondPlayerWarriors[i] = new Knight(i, i, i, i);
+                secondPlayerWarriors[i] = new Knight(Knight.MAX_ARMOUR, Knight.MAX_HEALTH, Knight.MAX_ATTACK, 0);
             } else if (random.nextInt(3) == 1) {
-                secondPlayerWarriors[i] = new Wizard(i, i, i, i);
+                secondPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else {
-                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
 
-        in.close();
     }
 
     public static void AutomaticInitialization() {
@@ -115,7 +115,7 @@ public class Initialization {
             } else if (random.nextInt(3) == 1) {
                 firstPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else {
-                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                firstPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
         for (int i = 0; i < 3; ++i) {
@@ -124,7 +124,7 @@ public class Initialization {
             } else if (random.nextInt(3) == 1) {
                 secondPlayerWarriors[i] = new Wizard(Wizard.MAX_ARMOUR, Wizard.MAX_HEALTH, Wizard.MAX_ATTACK, Wizard.MAX_MANA);
             } else {
-                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, i);
+                secondPlayerWarriors[i] = new Terminator(Terminator.MAX_ARMOUR, Terminator.MAX_HEALTH, Terminator.MAX_ATTACK, 0);
             }
         }
     }
@@ -166,12 +166,11 @@ public class Initialization {
                 loadingBar[i] = '⬜';
                 System.out.println("Initializing classes. LOADING...");
                 System.out.print(5*(i + 1) + " /" + 100 + "  ");
-                // for (int j = 0; j < 20; ++j) {
-                //     System.out.print(loadingBar[j]);
-                // }
-                // Thread.sleep(500);
-                // System.out.println("\033[H\033[2J");
-                
+                for (int j = 0; j < 20; ++j) {
+                    System.out.print(loadingBar[j]);
+                }
+                Thread.sleep(500);
+                System.out.println("\033[H\033[2J");    
             }
             System.err.println("SUCCESSFULLY LOADED");
             
@@ -189,12 +188,6 @@ public class Initialization {
             
         } else {
             AutomaticInitialization();
-            // for (int i = 0; i < 3; i++) {
-            //     System.out.println(firstPlayerWarriors[i].getClass());
-            // }
-            // for (int i = 0; i < 3; i++) {
-            //     System.out.println(secondPlayerWarriors[i].getClass());
-            // }
         }
     }
 

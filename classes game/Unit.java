@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Unit extends Initialization {
     final static double GRID_SEGMENTS = 25;
@@ -29,6 +30,42 @@ public class Unit extends Initialization {
      * Annihilated, Healed, Star Dashed
      * 
      */
+    public static Unit ChooseEnemyManually(String WhichPlayerAttacks) {
+        Scanner in = new Scanner(System.in);
+        Unit enemyToAttack = null;
+        if (WhichPlayerAttacks == "first") {
+            for (int i = 0; i < 3; i++) {
+                System.out.println(" " + (i + 1) + ". " + Initialization.secondPlayerWarriors[i].getClass().toString());
+            }
+            System.out.println("Pick which enemy you want to attack (enter number)");
+            System.out.print("> ");
+            String enemyNumber = in.next();
+            while (!enemyNumber.equals("1") && !enemyNumber.equals("2") && !enemyNumber.equals("3")) {
+                System.out.println("Wrong enemy's number, try again.");
+                System.out.print("> ");
+                enemyNumber = in.next();
+            }
+            int intEnemyNumber = Integer.parseInt(enemyNumber);
+            enemyToAttack = Initialization.secondPlayerWarriors[intEnemyNumber - 1];
+            System.out.println("\033[H\033[2J");
+        } else if (WhichPlayerAttacks == "second") {
+            for (int i = 0; i < 3; i++) {
+                System.out.println(" " + (i + 1) + " " + Initialization.firstPlayerWarriors[i].getClass().toString());
+            }
+            System.out.println("Pick which enemy you want to attack (enter number)");
+            System.out.print("> ");
+            String enemyNumber = in.next();
+            while (!enemyNumber.equals("1") && !enemyNumber.equals("2") && !enemyNumber.equals("3")) {
+                System.out.println("Wrong enemy's number, try again.");
+                System.out.print("> ");
+                enemyNumber = in.next();
+            }
+            int intEnemyNumber = Integer.parseInt(enemyNumber);
+            enemyToAttack = Initialization.firstPlayerWarriors[intEnemyNumber - 1];
+            System.out.println("\033[H\033[2J");
+        }
+        return enemyToAttack;
+    }
 
     public static void PrintCommonCharacteristics(Unit warrior) {
         if (warrior.getClass().equals(Knight.class)) {
@@ -43,9 +80,9 @@ public class Unit extends Initialization {
             Wizard warriorWizard = (Wizard) warrior;
             ShowBar(warriorWizard.mana, Wizard.MAX_MANA, Colors.ANSI_PURPLE);
         } else if (warrior.getClass().equals(Terminator.class)) {
-            System.out.print("Terminator\n Health: ");
+            System.out.print("Terminator\n Health:  ");
             ShowBar(warrior.health, Terminator.MAX_HEALTH, Colors.ANSI_RED);
-            System.out.print(" Armour: ");
+            System.out.print(" Armour:  ");
             ShowBar(warrior.armour, Terminator.MAX_ARMOUR, Colors.ANSI_BLUE);
             Terminator warriorTerminator = (Terminator) warrior;
             System.out.print(" Ability: ");
@@ -61,32 +98,57 @@ public class Unit extends Initialization {
         }
         return criticalChance;
     }
-
-    public void Attack(Unit Attacked) {
+    /*TODO ClassAttack() */
+    public void Attack(Unit attacked) {
         Random random = new Random();
         double critChance = this.GetCriticalChance();
-        if (Attacked.getClass().equals(Knight.class)){
-            if (Attacked.chanceToParry < random.nextInt(100)/100.0) {
-                if (Attacked.armour - this.attack*critChance > 0) {
-                    Attacked.armour -= this.attack*GetCriticalChance();
+        if (attacked.getClass().equals(Knight.class)){
+            Knight attackedKnight = (Knight) attacked;
+            attacked.chanceToParry = attackedKnight.GetChanceToParry();
+            if (attacked.chanceToParry < random.nextInt(75)/100.0) {
+                if (attacked.armour - this.attack*critChance > 0) {
+                    attacked.armour -= this.attack*GetCriticalChance();
+                    System.out.println("Knight got hit");
                 } else {
-                    Attacked.health -= (this.attack*critChance - Attacked.armour);
-                    Attacked.armour = 0;
+                    if (attacked.health - (this.attack*critChance - attacked.armour) > 0) {
+                        attacked.health -= (this.attack*critChance - attacked.armour);
+                        attacked.armour = 0;
+                        System.out.println("Knight got hit");
+                    } else {
+                        attacked.health = 0;
+                        System.out.println("Knight recieved a fatal blow");
+                    }
                 }
-            } 
-        } else if (Attacked.getClass().equals(Wizard.class)) {
-            if (Attacked.armour - this.attack*critChance > 0) {
-                Attacked.armour -= this.attack*critChance;
             } else {
-                Attacked.health -= (this.attack*critChance - Attacked.armour);
-                Attacked.armour = 0;
+                System.out.println("DODGED");
             }
-        } else if (Attacked.getClass().equals(Terminator.class)){
-            if (Attacked.armour - this.attack*critChance > 0) {
-                Attacked.armour -= this.attack*critChance;
+        } else if (attacked.getClass().equals(Wizard.class)) {
+            if (attacked.armour - this.attack*critChance > 0) {
+                attacked.armour -= this.attack*critChance;
+                System.out.println("Wizard got hit");
             } else {
-                Attacked.health -= (this.attack*critChance - Attacked.armour);
-                Attacked.armour = 0;
+                if (attacked.health - (this.attack*critChance - attacked.armour) > 0) {
+                    attacked.health -= (this.attack*critChance - attacked.armour);
+                    attacked.armour = 0;
+                    System.out.println("Wizard got hit");
+                } else {
+                    attacked.health = 0;
+                    System.out.println("Wizard recieved a fatal blow");
+                }
+            }
+        } else if (attacked.getClass().equals(Terminator.class)){
+            if (attacked.armour - this.attack*critChance > 0) {
+                attacked.armour -= this.attack*critChance;
+                System.out.println("Terminator got hit");
+            } else {
+                if (attacked.health - (this.attack*critChance - attacked.armour) > 0) {
+                    attacked.health -= (this.attack*critChance - attacked.armour);
+                    attacked.armour = 0;
+                    System.out.println("Terminator got hit");
+                } else {
+                    attacked.health = 0;
+                    System.out.println("Terminator recieved a fatal blow");
+                }
             }
         }
     }
@@ -105,7 +167,7 @@ class Knight extends Unit {
         double chanceToParry = 0;
         if (this.health < 50) {
             Random random = new Random();
-            chanceToParry = random.nextInt(75)/100;
+            chanceToParry = random.nextInt(100)/100.0;
         }
         return chanceToParry;
     }
